@@ -142,7 +142,9 @@ function syncHeight() {
 // Wire a list to a bottom-middle chevron: shows the footer only when the list
 // overflows, scrolls a page on click, and flips to "up" at the bottom.
 // Returns an update() to refresh the arrow after the list content changes.
-function setupScrollArrow(listId, footerId, arrowId) {
+// alwaysShowFooter: keep the footer row visible (for the credit) and only
+// toggle the arrow; otherwise hide the whole footer when there's no overflow.
+function setupScrollArrow(listId, footerId, arrowId, alwaysShowFooter = false) {
   const list = document.getElementById(listId);
   const footer = document.getElementById(footerId);
   const arrow = document.getElementById(arrowId);
@@ -153,7 +155,12 @@ function setupScrollArrow(listId, footerId, arrowId) {
 
   function update() {
     const overflows = list.scrollHeight > list.clientHeight + 1;
-    footer.hidden = !overflows;
+    if (alwaysShowFooter) {
+      footer.hidden = false;
+      arrow.hidden = !overflows;
+    } else {
+      footer.hidden = !overflows;
+    }
     if (overflows) arrow.classList.toggle("up", atBottom());
   }
 
@@ -165,7 +172,7 @@ function setupScrollArrow(listId, footerId, arrowId) {
   return update;
 }
 
-const updateArrow = setupScrollArrow("list", "footer", "scrollArrow");
+const updateArrow = setupScrollArrow("list", "footer", "scrollArrow", true);
 const updateTimesArrow = setupScrollArrow("times", "detailFooter", "timesArrow");
 
 document.querySelectorAll(".filter").forEach((btn) => {
