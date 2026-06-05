@@ -42,18 +42,17 @@ async function render() {
 
   const list = document.getElementById("list");
   const empty = document.getElementById("empty");
-  const summary = document.getElementById("summary");
   list.innerHTML = "";
 
   if (sorted.length === 0) {
     empty.hidden = false;
-    summary.textContent = "";
+    renderStats(0, 0, null);
     updateArrow();
     return;
   }
 
   empty.hidden = true;
-  summary.textContent = `${total} visit${total === 1 ? "" : "s"} across ${sorted.length} site${sorted.length === 1 ? "" : "s"}`;
+  renderStats(total, sorted.length, sorted[0]); // sorted[0] = [host, count] of top site
 
   for (const [host, count] of sorted) {
     const li = document.createElement("li");
@@ -81,6 +80,53 @@ async function render() {
     updateArrow();
     syncHeight();
   });
+}
+
+// Build the top stats bar: Total Visits · Sites · Top Site (for the active range).
+function renderStats(total, siteCount, top) {
+  const stats = document.getElementById("stats");
+  if (siteCount === 0) {
+    stats.hidden = true;
+    stats.innerHTML = "";
+    return;
+  }
+  stats.hidden = false;
+  stats.innerHTML = "";
+
+  // A numeric stat (Total Visits / Sites).
+  function numStat(value, label) {
+    const el = document.createElement("div");
+    el.className = "stat";
+    const v = document.createElement("div");
+    v.className = "stat-val";
+    v.textContent = value;
+    const l = document.createElement("div");
+    l.className = "stat-label";
+    l.textContent = label;
+    el.append(v, l);
+    return el;
+  }
+
+  // The Top Site stat: favicon only.
+  function topStat([host, count]) {
+    const el = document.createElement("div");
+    el.className = "stat stat-top";
+    const v = document.createElement("div");
+    v.className = "stat-val";
+    const img = document.createElement("img");
+    img.className = "stat-fav";
+    img.src = faviconUrl(host);
+    img.alt = host;
+    img.title = `${host} · ${count} visits`;
+    v.append(img);
+    const l = document.createElement("div");
+    l.className = "stat-label";
+    l.textContent = "Top Site";
+    el.append(v, l);
+    return el;
+  }
+
+  stats.append(numStat(total, "Total Visits"), numStat(siteCount, "Sites"), topStat(top));
 }
 
 // The viewport hugs whichever screen is currently shown, so the popup is only

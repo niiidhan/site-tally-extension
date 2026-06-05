@@ -71,13 +71,57 @@ header h1 {
   border-color: var(--accent-hover);
 }
 
-#summary {
-  font-size: 11px;
-  font-weight: 500;
+/* Top stats bar: Total Visits · Sites · Top Site */
+.stats-bar {
+  display: flex;
+  align-items: stretch;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 10px 2px;
+  margin-bottom: 12px;
+}
+
+.stats-bar .stat {
+  flex: 1;
+  min-width: 0;
+  text-align: center;
+  padding: 0 6px;
+}
+
+.stats-bar .stat + .stat {
+  border-left: 1px solid var(--border);
+}
+
+.stat-val {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  height: 20px;
+  font-size: 16px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  font-variant-numeric: tabular-nums;
+  color: var(--text);
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.stat-fav {
+  width: 18px;
+  height: 18px;
+  border-radius: 4px;
+  flex-shrink: 0;
+}
+
+.stat-label {
+  margin-top: 3px;
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
   color: var(--text-dim);
-  letter-spacing: 0.01em;
-  margin-bottom: 10px;
-  padding-left: 2px;
 }
 
 ul {
