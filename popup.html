@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <link rel="stylesheet" href="popup.css" />
+</head>
+<body>
+  <div id="viewport">
+    <!-- Screen 1: site list -->
+    <section id="mainView" class="view">
+      <header>
+        <div class="filters">
+          <button class="filter active" data-range="today">Today</button>
+          <button class="filter" data-range="week">Week</button>
+          <button class="filter" data-range="all">All Time</button>
+        </div>
+      </header>
+
+      <div id="summary"></div>
+      <ul id="list"></ul>
+      <p id="empty" class="empty" hidden>No visits in this range yet.</p>
+
+      <footer id="footer" class="scroll-footer" hidden>
+        <button id="scrollArrow" class="scroll-arrow" aria-label="Scroll">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="6 9 12 15 18 9"></polyline>
+          </svg>
+        </button>
+      </footer>
+    </section>
+
+    <!-- Screen 2: per-site visit log (slides in from the right) -->
+    <section id="detailView" class="view" aria-hidden="true">
+      <header class="detail-header">
+        <button id="back" aria-label="Back">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="15 18 9 12 15 6"></polyline>
+          </svg>
+        </button>
+        <img id="detailFavicon" alt="" />
+        <span id="detailHost"></span>
+      </header>
+
+      <div class="detail-body">
+        <aside class="filter-box">
+          <h2 class="filter-title">Filter</h2>
+          <button class="dfilter active" data-range="all">All</button>
+          <button class="dfilter" data-range="today">Today</button>
+          <button class="dfilter" data-range="week">This Week</button>
+        </aside>
+
+        <div class="timeline-wrap">
+          <div id="detailSummary"></div>
+          <ul id="times"></ul>
+        </div>
+      </div>
+
+      <footer id="detailFooter" class="scroll-footer" hidden>
+        <button id="timesArrow" class="scroll-arrow" aria-label="Scroll">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="6 9 12 15 18 9"></polyline>
+          </svg>
+        </button>
+      </footer>
+    </section>
+  </div>
+
+  <script src="popup.js"></script>
+</body>
+</html>
